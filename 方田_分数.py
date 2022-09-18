@@ -20,6 +20,7 @@ class 分数(object):
     def __str__(self):
         return '{}分之{}'.format(汉字数字(self.分母), 汉字数字(self.分子))
     def __mul__(self, x):
+        'int or 分数 on the right'
         if type(x)==int:
             return 分数(self.分子*x, self.分母)
         s=分数(self.分子*x.分子, self.分母*x.分母)
@@ -83,6 +84,10 @@ class 面积(object):
             self.亩, self.积步=divmod(self.积步, 240)
             self.顷, self.亩=divmod(self.亩, 100)
             self.积里=分数(0, 1)
+    def __mul__(self, x):
+        '分数 on the right'
+        if type(x)==分数:
+            return 面积(顷=self.顷*x, 积里=self.积里*x, 亩=self.亩*x, 积步=self.积步*x)
     def __add__(self, x):
         s=面积(self.顷+x.顷, self.积里+x.积里, self.亩+x.亩, self.积步+x.积步)
         s.换算()
@@ -119,7 +124,10 @@ class 长度(object):
             self.里, self.步=divmod(self.里*300+self.步, 300)
     def __str__(self):
         return '{}里{}步'.format(str(self.里), str(self.步))
-    def __mul__(self, x)->面积:
+    def __mul__(self, x):
+        '分数 or 长度 on the right'
+        if type(x)==分数:
+            return 长度(里=self.里*x, 步=self.步*x)
         if self.步==分数(0, 1) and x.步==分数(0, 1):
             s=面积(顷=分数(0, 1), 积里=分数(0, 1), 亩=self.里*x.里*375, 积步=分数(0, 1))
             s.换算()
