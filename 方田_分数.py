@@ -87,7 +87,9 @@ class 面积(object):
     def __mul__(self, x):
         '分数 on the right'
         if type(x)==分数:
-            return 面积(顷=self.顷*x, 积里=self.积里*x, 亩=self.亩*x, 积步=self.积步*x)
+            s=面积(顷=self.顷*x, 积里=self.积里*x, 亩=self.亩*x, 积步=self.积步*x)
+            s.换算()
+            return s
     def __add__(self, x):
         s=面积(self.顷+x.顷, self.积里+x.积里, self.亩+x.亩, self.积步+x.积步)
         s.换算()
@@ -127,7 +129,9 @@ class 长度(object):
     def __mul__(self, x):
         '分数 or 长度 on the right'
         if type(x)==分数:
-            return 长度(里=self.里*x, 步=self.步*x)
+            s=长度(里=self.里*x, 步=self.步*x)
+            s.换算()
+            return s
         if self.步==分数(0, 1) and x.步==分数(0, 1):
             s=面积(顷=分数(0, 1), 积里=分数(0, 1), 亩=self.里*x.里*375, 积步=分数(0, 1))
             s.换算()
