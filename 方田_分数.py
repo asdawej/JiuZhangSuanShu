@@ -15,7 +15,7 @@ def 约分术(分子, 分母):
     return int(分子/m), int(分母/m)
 
 class 分数(object):
-    def __init__(self, 分子:int, 分母:int):
+    def __init__(self, 分子: int, 分母: int):
         self.分子, self.分母=约分术(分子, 分母)
     def __str__(self):
         return '{}分之{}'.format(汉字数字(self.分母), 汉字数字(self.分子))
@@ -67,7 +67,7 @@ class 分数(object):
         return self>=x and self<=x
     
 class 面积(object):
-    def __init__(self, 顷:分数, 积里:分数, 亩:分数, 积步:分数):
+    def __init__(self, 顷: 分数, 积里: 分数, 亩: 分数, 积步: 分数):
         self.顷=顷
         self.积里=积里
         self.亩=亩
@@ -116,7 +116,7 @@ class 面积(object):
         return self>=x and self<=x
     
 class 长度(object):
-    def __init__(self, 里:分数, 步:分数):
+    def __init__(self, 里: 分数, 步: 分数):
         self.里=里
         self.步=步
     def 换算(self, base=None):
@@ -167,7 +167,7 @@ class 长度(object):
     def __eq__(self, x):
         return self>=x and self<=x
 
-def 平分术(l:list[分数]):
+def 平分术(l: list[分数]):
     平实=0
     未并者=[]
     for i,x in enumerate(l):
