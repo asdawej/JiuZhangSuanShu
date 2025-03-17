@@ -1,0 +1,9 @@
+{
+    "pylint.args": [
+        "--max-line-length=120",
+        "--disable=W2402,C2401,C2403", // 非ASCII字符
+        "--disable=W0621,W1514",
+        "--disable=C0103,C0114,C0115,C0116",
+        "--disable=R0902,R0903,R0912,R0913,R0914,R0915"
+    ]
+}
