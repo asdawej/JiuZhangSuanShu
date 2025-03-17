@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from functools import total_ordering
 
 d_汉字数字 = {0: '零', 1: '一', 2: '二', 3: '三', 4: '四', 5: '五', 6: '六', 7: '七', 8: '八', 9: '九'}
 
@@ -19,6 +20,7 @@ def 约分术(分子: int, 分母: int) -> tuple[int, int]:
     return int(分子 / m), int(分母 / m)
 
 
+@total_ordering
 class 分数:
     def __init__(self, 分子: int, 分母: int):
         self.分子, self.分母 = 约分术(分子, 分母)
@@ -67,24 +69,13 @@ class 分数:
             x = 分数(x, 1)
         return self.分子 * x.分母 - self.分母 * x.分子 < 0
 
-    def __gt__(self, x: 分数 | int) -> bool:
+    def __eq__(self, x: 分数 | int) -> bool:
         if isinstance(x, int):
             x = 分数(x, 1)
-        return self.分子 * x.分母 - self.分母 * x.分子 > 0
-
-    def __le__(self, x: 分数 | int) -> bool:
-        return not self > x
-
-    def __ge__(self, x: 分数 | int) -> bool:
-        return not self < x
-
-    def __ne__(self, x: 分数 | int) -> bool:
-        return self > x or self < x
-
-    def __eq__(self, x: 分数 | int) -> bool:
-        return x <= self <= x
+        return self.分子 * x.分母 - self.分母 * x.分子 == 0
 
 
+@total_ordering
 class 面积:
     def __init__(self, 顷: 分数, 积里: 分数, 亩: 分数, 积步: 分数):
         self.顷 = 顷
@@ -126,24 +117,13 @@ class 面积:
         x.换算(base='积步')
         return self.积步 < x.积步
 
-    def __gt__(self, x: 面积) -> bool:
+    def __eq__(self, x: 面积) -> bool:
         self.换算(base='积步')
         x.换算(base='积步')
-        return self.积步 > x.积步
-
-    def __le__(self, x: 面积) -> bool:
-        return not self > x
-
-    def __ge__(self, x: 面积) -> bool:
-        return not self < x
-
-    def __ne__(self, x: 面积) -> bool:
-        return self > x or self < x
-
-    def __eq__(self, x: 面积) -> bool:
-        return x <= self <= x
+        return self.积步 == x.积步
 
 
+@total_ordering
 class 长度:
     def __init__(self, 里: 分数, 步: 分数):
         self.里 = 里
@@ -188,22 +168,10 @@ class 长度:
         x.换算(base='步')
         return self.步 < x.步
 
-    def __gt__(self, x: 长度) -> bool:
+    def __eq__(self, x: 长度) -> bool:
         self.换算(base='步')
         x.换算(base='步')
-        return self.步 > x.步
-
-    def __le__(self, x: 长度) -> bool:
-        return not self > x
-
-    def __ge__(self, x: 长度) -> bool:
-        return not self < x
-
-    def __ne__(self, x: 长度) -> bool:
-        return self > x or self < x
-
-    def __eq__(self, x: 长度) -> bool:
-        return x <= self <= x
+        return self.步 == x.步
 
 
 def 平分术(l: list[分数]) -> tuple[list[tuple[str, 分数]], 分数]:
